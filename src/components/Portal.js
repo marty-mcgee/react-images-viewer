@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import PropsTypes from 'prop-types'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { render, unmountComponentAtNode } from 'react-dom'
+// OLD
+// import { render, unmountComponentAtNode } from 'react-dom'
+// NEW
+import { createRoot } from 'react-dom/client'
 
 
 export default class Portal extends Component {
   constructor() {
     super()
     this.portalElement = null
+    // NEW
+    this.root = null
   }
   componentDidMount() {
     const div = document.createElement('div')
@@ -25,7 +30,22 @@ export default class Portal extends Component {
 				.fade-leave.fade-leave-active { opacity: .01; transition: opacity ${duration}ms; }
 		`
 
-    render(
+    // OLD
+    // render(
+    //   <div>
+    //     <style>{styles}</style>
+    //     <TransitionGroup
+    //       {...this.props}>
+    //       <CSSTransition timeout={{ enter: duration, exit: duration }} className="fade">
+    //         <div>{this.props.children}</div>
+    //       </CSSTransition>
+    //     </TransitionGroup>
+    //   </div>,
+    //   this.portalElement
+    // )
+    // NEW (FOR REACT 18)
+    this.root = createRoot(this.portalElement)
+    this.root.render(
       <div>
         <style>{styles}</style>
         <TransitionGroup
@@ -34,12 +54,14 @@ export default class Portal extends Component {
             <div>{this.props.children}</div>
           </CSSTransition>
         </TransitionGroup>
-      </div>,
-      this.portalElement
+      </div>
     )
   }
   componentWillUnmount() {
-    unmountComponentAtNode(this.portalElement)
+    // OLD
+    // unmountComponentAtNode(this.portalElement)
+    // NEW
+    this.root.unmount()
     document.body.removeChild(this.portalElement)
   }
   render() {

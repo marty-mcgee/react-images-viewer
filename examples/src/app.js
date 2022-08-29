@@ -1,5 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
+// OLD
+// import { render } from "react-dom"
+// NEW
+import { createRoot } from "react-dom/client";
 import Gallery from "./components/Gallery";
 import CustomSpinner from "./components/Spinner";
 import "./example.less";
@@ -233,7 +236,11 @@ const theme = {
 //   },
 // };
 
-render(
+// OLD
+// render(
+// NEW (FOR REACT 18)
+const root = createRoot(document.getElementById('example'))
+root.render(
   <div>
     <div>
       <p>
@@ -308,6 +315,7 @@ render(
       spinnerSize={150}
       showThumbnails
     />
-  </div>,
-  document.getElementById("example")
+  </div>
+  // OLD
+  // , document.getElementById('example-CN')
 );

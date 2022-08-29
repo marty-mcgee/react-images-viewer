@@ -5,10 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Build
-lib
-dist
-examples/dist
+# Build (NEED FOR PRODUCTION)
+# lib
+# dist
+# examples/dist
 
 # Webstorm
 .idea/

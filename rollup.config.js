@@ -2,6 +2,8 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import { uglify } from 'rollup-plugin-uglify'
 import { minify } from 'uglify-es'
+// NEW
+import commonjs from 'rollup-plugin-commonjs'
 
 const name = 'ImgsViewer'
 const path = 'dist/react-images-viewer'
@@ -37,7 +39,15 @@ export default [
       format: 'es',
     },
     external: external,
-    plugins: [babel(babelOptions(false))]
+    plugins: [
+      babel(babelOptions(false)),
+      // NEW
+      commonjs({
+        namedExports: {
+          "react-dom": ["createRoot"],
+        },
+      })
+    ]
   },
   {
     input: 'src/ImgsViewer.js',
@@ -48,7 +58,16 @@ export default [
       globals: globals,
     },
     external: external,
-    plugins: [babel(babelOptions(false)), resolve()]
+    plugins: [
+      babel(babelOptions(false)),
+      resolve(),
+      // NEW
+      commonjs({
+        namedExports: {
+          "react-dom": ["createRoot"],
+        },
+      })
+    ]
   },
   {
     input: 'src/ImgsViewer.js',
@@ -59,6 +78,16 @@ export default [
       globals: globals,
     },
     external: external,
-    plugins: [babel(babelOptions(true)), resolve(), uglify({}, minify)],
+    plugins: [
+      babel(babelOptions(true)),
+      resolve(),
+      uglify({}, minify),
+      // NEW
+      commonjs({
+        namedExports: {
+          "react-dom": ["createRoot"],
+        },
+      })
+    ]
   }
 ]

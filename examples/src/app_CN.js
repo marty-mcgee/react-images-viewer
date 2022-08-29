@@ -1,5 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
+// OLD
+// import { render } from 'react-dom'
+// NEW
+import { createRoot } from 'react-dom/client'
 import Gallery from './components/Gallery'
 import CustomSpinner from './components/Spinner'
 import './example.less'
@@ -103,7 +106,11 @@ const theme = {
   }
 };
 
-render(
+// OLD
+// render(
+// NEW (FOR REACT 18)
+const root = createRoot(document.getElementById('example-CN'))
+root.render(
   <div>
     <div>
       <p>照片均来自
@@ -169,6 +176,7 @@ render(
       spinnerSize={150}
       showThumbnails
     />
-  </div>,
-  document.getElementById('example-CN')
+  </div>
+  // OLD
+  // , document.getElementById('example-CN')
 )
